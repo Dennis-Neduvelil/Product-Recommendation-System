@@ -1,0 +1,25 @@
+{%extends "base.html" %} {%block content%}
+
+<div class="message-container">
+  <div>
+    <div class="card" style="width: 30rem">
+      <div class="text-center">
+        <img
+          class="card-img-top"
+          src="{{url_for('static',filename='images/emoji.png')}}"
+          alt="Card image cap"
+        />
+
+        <div class="card-body">
+          <h5 class="card-title">{{message}}</h5>
+          <p class="card-text">{{message_desc}}</p>
+          <div class="text-center">
+            <a href="{{btnlink}}" class="btn btn-dark">{{btnname}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

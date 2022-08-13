@@ -1,0 +1,59 @@
+{%extends "base.html" %} {%block content%}
+<div class="cart-wrapper" style="height: 90vh">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div>
+          <h2>Cart Items</h2>
+        </div>
+        <div class="cart-item-container" style="height: 75vh; overflow-x: hidden; overflow-y: scroll; ">
+            {% for item in cart %}
+
+
+              <div class="card mr-2 my-2" style="height: 150px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    {% set image_name="images/"+item['id']|string+".jpg" %}
+                    <img src="{{url_for('static',filename=image_name)}}" class="img-fluid rounded-start" style="max-height: 125px ;" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{item.productDisplayName}}</h5>
+                      <h4 class="card-text"><small class="text-muted">Price : Rs. {{item.discountedPrice}}</small></h4>
+                      <p class="card-text"><small class="text-muted">Qty : 1</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+             {% endfor %} 
+              
+
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h2>Proceed</h2>
+        <div>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Your Cart Details</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Cart price's shown here..</h6>
+
+      
+                  <h5 class="mt-4">Number items : {{cal[0]}}</h5>
+                  <h5>Total price : Rs. {{cal[1]}}</h5>
+                  <h5>Total Discounts : Rs. {{cal[2]}}</h5>
+                  <h4 class="mt-4">Last Price : Rs. {{cal[3]}}</h4>
+
+                  <form action="/submitCart" method="post">
+                    <input type="text" value="{{proId}}" name="cartItems" hidden required>
+                    <button type="submit" class="btn btn-dark float-start mt-5">Proceed</button>
+                  </form>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

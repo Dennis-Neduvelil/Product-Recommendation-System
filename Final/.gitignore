@@ -1,0 +1,6 @@
+static/images/
+models/
+*.pkl
+*.jpg
+*.npy
+*.csv

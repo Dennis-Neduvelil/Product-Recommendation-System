@@ -1,0 +1,130 @@
+{%extends "base.html" %} {%block content%}
+
+<div>
+  <section style="min-height: 90vh">
+    <div class="container">
+      <h2>{{product_details['productDisplayName']}}</h2>
+      <div class="row">
+        <div class="col-md-6">
+         {% set image_name="images/"+product_details['id']|string+".jpg" %}
+          <div >
+            <img
+              src="{{url_for('static',filename=image_name)}}"
+              class="img-fluid"
+              alt="..."
+              style="height: 60vh; margin-top: 60px"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <div class="card" style="min-height: 70vh; width: auto">
+              <div class="card-body">
+                <h4 class="card-title">{{product_details['productDisplayName']}}</h4>
+                <h5 class="card-subtitle mb-2 text-muted">Brand: {{product_details['brandName']}}</h5>
+                <h6>Varient: {{product_details['variantName']}}</h6>
+                <h6>Age Group: {{product_details['variantName']}}</h6>
+                <h6>Gender : {{product_details['gender']}}</h6>
+                <h6>Color : {{product_details['baseColour']}}</h6>
+                <h6>Usage : {{product_details['usage']}}</h6>
+                <p class="card-text">
+                  {{product_details['productDescriptors']}}
+                </p>
+                {% if product_details['price'] == product_details['discountedPrice'] %}
+                <h1>Rs.{{product_details['discountedPrice']}} Only/-</h1>
+                {% else %}
+                <h2> <s>MRP Rs.{{product_details['price']}}</s></h2>
+                <h1>Rs.{{product_details['discountedPrice']}} Only/-</h1>
+                {% endif %}
+                <form action="/addtocart" method="post">
+                  <input value="{{product_details['id']}}" name="product" type="text" hidden>
+                <button type="submit" class="btn btn-dark">Add to cart</button>
+                <button type="button" class="btn btn-dark" disabled>Buy now</button>
+              </form>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-dark my-3" role="alert">
+         <div class="d-flex justify-content-between">
+            <p>Find Similar Products Using AI Reserve Scanning </p> 
+            <form action="/predict-style" method="post">
+              <input hidden type="text" name="product" value={{product_details['id']}}>
+              <button type="submit" class="btn btn-outline-dark">Click Me !!!</button>
+            </form>
+         </div>
+       </div>
+    </div>
+  </section>
+<div>
+
+</div>
+
+
+  <section class="product_section layout_padding">
+   <div class="container">
+      <div class="heading_container heading_center">
+         <h2>
+            Similar <span>Products</span>
+         </h2>
+      </div>
+      <div class="row">
+
+         {% if content_based_products =='No Data'  %}
+
+         <div class="card w-100">
+            <img class="card-img-top" style="height:400px;width:auto; background-size: cover;" src="https://images.pexels.com/photos/4530790/pexels-photo-4530790.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+            <div class="card-body">
+              <h4 class="card-title">OOPS!!!!!!</h4>
+              <p class="card-text">We are not trained content based data for this product</p>
+            </div>
+          </div>
+
+         {% else %}
+
+         {% for items in content_based_products%}
+
+         {% set image_name="images/"+items['id']|string+".jpg" %}
+
+ 
+
+         
+         <div class="col-lg-4 col-md-6 col-sm-12">
+            <form action="/product" method="post">
+               <input type="text" name="product_id" value={{items['id']}} hidden>
+               <button class="my-2" style="border: none; padding: 0; " >
+                  <div class="card m-4 shadow-lg abc-card" style="width: 20rem; ">
+                     <div class="text-center">
+                        <img class="card-img-top" style="height: auto; width:250px" src="{{url_for('static',filename=image_name)}}" alt="Card image cap">
+                     </div>
+                     <div class="card-body">
+                        <hr>
+                        <h6 class="card-title" style="height:40px;">{{items['productDisplayName']}}</h6>
+                        <div>
+                          {% if items['price'] != items['discountedPrice'] %}
+                          <h6> MRP : <s>Rs.{{items['price']}}</s> <b>Rs. {{items['discountedPrice']}} Only/-</b> </h6>
+                          {% else %}
+                          <h6> MRP : <b>Rs.{{items['price']}}</b></h6>
+                          {% endif %}
+                         </div>
+                     </div>
+                   </div>
+               </button>
+            </form>
+
+         </div>
+ 
+         {%endfor%}
+
+         {% endif %}
+
+
+      </div>
+   </div>
+</section>
+
+</div>
+
+{% endblock %}

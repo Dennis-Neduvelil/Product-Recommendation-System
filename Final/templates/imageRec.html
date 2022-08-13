@@ -1,0 +1,77 @@
+{%extends "base.html" %}
+{%block content%}
+
+<section class="arrival_section" style="background-color:white ;">
+    <div class="container" onclick="window.location.href='/upload-file'"">
+       <div class="box">
+          <div class="arrival_bg_box">
+             <img class="shadow rounded" style="width:auto ;" src="{{url_for('static',filename='predictImage.jpg')}}" alt="">
+          </div>
+          <div class="row">
+             <div class="col-md-6 ml-auto">
+                <div class="heading_container remove_line_bt">
+                   <h2>
+                      #AI IS HERE
+                   </h2>
+                </div>
+                <p style="margin-top: 20px;margin-bottom: 30px;">
+                   Find your desired products using AI upload an image to find similar styles with the help of AI Technology
+                </p>
+                <h5>#AI IS HERE
+                </h5>
+                <a href="">
+                Try Now
+                </a>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+
+
+ <section class="product_section layout_padding">
+    <div class="container">
+       <div class="heading_container heading_center">
+          <h2>
+             Similar From Your <span>Image</span>
+          </h2>
+       </div>
+       <div class="row">
+          {% for items in image_pred_data %}
+ 
+          {% set image_name="images/"+items['id']|string+".jpg" %}
+ 
+          
+          <div class="col-lg-4 col-md-6 col-sm-12">
+             <form action="/product" method="post">
+                <input type="text" name="product_id" hidden value={{items['id']}}>
+                <button class="my-2" style="border: none; padding: 0;">
+                   <div class="card m-4 shadow-lg abc-card" style="width: 20rem; ">
+                      <div class="text-center">
+                         <img class="card-img-top" style="height: auto; width:250px" src="{{url_for('static',filename=image_name)}}" alt="Card image cap">
+                      </div>
+                      <div class="card-body">
+                         <hr>
+                         <h6 class="card-title" style="height:40px;">{{items['productDisplayName']}}</h6>
+                         <div>
+                           {% if items['price'] != items['discountedPrice'] %}
+                           <h6> MRP : <s>Rs.{{items['price']}}</s> <b>Rs. {{items['discountedPrice']}} Only/-</b> </h6>
+                           {% else %}
+                           <h6> MRP : <b>Rs.{{items['price']}}</b></h6>
+                           {% endif %}
+                          </div>
+                      </div>
+                    </div>
+                </button>
+             </form>
+ 
+          </div>
+  
+          {%endfor%}
+ 
+ 
+       </div>
+    </div>
+ </section>
+
+{% endblock %}

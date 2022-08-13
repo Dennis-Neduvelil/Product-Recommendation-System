@@ -1,0 +1,8 @@
+Fashion Dataset
+Filtred Datasets
+Final/static/images/
+Final/models/
+*.pkl
+*.jpg
+*.npy
+*.csv

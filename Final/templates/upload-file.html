@@ -1,0 +1,47 @@
+{%extends "base.html" %} {%block content%}
+
+<section
+  style="
+    background-image: url('https://images.pexels.com/photos/9980855/pexels-photo-9980855.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-repeat: no-repeat;
+    background-size: cover;
+  "
+>
+  <div
+    class="main container"
+    style="
+      height: 90vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div class="card p-4 shadow-lg rounded-lg" style="opacity: 80%;">
+      <h2 style="color: rgb(6, 6, 17) ;"><b>Find Similar Products Using AI</b></h2>
+      <hr />
+      <!-- <h4>Upload Your Image</h4> -->
+      <form action="/predict-style-upload" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="formFileSm" class="form-label"
+            >upload your image to find similar products</label
+          >
+          <input
+            style="padding: 0"
+            class="form-control form-control-sm"
+            name="file"
+            id="file"
+            type="file"
+            accept="image"
+          />
+        </div>
+        <button style="float: right" type="submit" class="btn btn-dark">
+          Yuhuu...
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
